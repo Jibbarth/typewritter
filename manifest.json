@@ -1,0 +1,30 @@
+{
+"name" :"typewritter",
+"version" :"1.0",
+"description" :"Enable sound. Type words on every website. Have fun.",
+"homepage_url": "http://jibébarth.fr",
+ "icons": { "16": "icon16.png",
+           "48": "icon48.png",
+          "128": "icon64.png" },
+  "content_scripts": [ {
+    "js": [ "jquery.min.js", "script.js" ],
+    "matches": [ "http://*/*", "https://*/*"]
+  }],
+   "browser_action": {
+    "name": "TypeWritter",
+    "icons": ["icon48.png"],
+    "default_icon": "icon48.png"
+  },
+   "web_accessible_resources": [
+   		"data/space.mp3",
+   		"data/backspace.mp3",
+   		"data/return.mp3",
+   		"data/return-new.mp3",
+   		"data/key-01.mp3",
+   		"data/key-02.mp3",
+   		"data/key-03.mp3",
+   		"data/key-04.mp3"
+   ],
+
+  "manifest_version": 2
+}
