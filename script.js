@@ -1,66 +1,83 @@
+var selectors = 'input:textbox, textarea, .ql-editor, .editable, .navigationFocus, [role="textbox"], [role="combobox"]';
 
- $("body").append("<audio src='data/return_new.mp3' autoplay style='display:none' id='soundTW'></audio>");
-var sound = document.getElementById("soundTW");
-		$('input').on('focus', function(){
-			sound.src = chrome.runtime.getURL("data/return-new.mp3");
-		});
-		$('textarea').on('focus', function(){
-			sound.src = chrome.runtime.getURL("data/return-new.mp3");
-		});
-		$('input').on('keydown', function(e) {
-			var code = (e.keyCode ? e.keyCode : e.which);
-			switch(code) 
-			{ 
-			case 13: // enter
-				sound.src = chrome.runtime.getURL("data/return.mp3");
-				
-			break; 
-			case 32:  // space
-				sound.src = chrome.runtime.getURL('data/space.mp3');
-				break; 
-			case 8:  // space
-			case 9: //tab
-				sound.src = chrome.runtime.getURL('data/backspace.mp3');
-				break; 
+var sounds = {
+    "space1" : "sound/space.mp3",
+    "space2" : "sound/space-new.mp3",
+    "backspace" : "sound/backspace.mp3",
+    "return" : "sound/return.mp3",
+    "return-new" : "sound/return-new.mp3",
+    "key1" : "sound/key-01.mp3",
+    "key2" : "sound/key-02.mp3",
+    "key3" : "sound/key-03.mp3",
+    "key4" : "sound/key-04.mp3",
+    "key-new1" : "sound/key-new-01.mp3",
+    "key-new2" : "sound/key-new-02.mp3",
+    "key-new3" : "sound/key-new-03.mp3",
+    "key-new4" : "sound/key-new-04.mp3",
+    "key-new5" : "sound/key-new-05.mp3"
+}
 
-			default: // all other key
-				var key = Math.floor((Math.random()*4)+1);
-				sound.src = chrome.runtime.getURL('data/key-0'+key+'.mp3');
-			break; 
-			}
-				if(code == 9) {//tab
-				this.value += '\t';
-				 return false;
-			}
-			else return true;
-			
-		});
+var types = ['button', 'submit', 'reset', 'hidden', 'checkbox', 'radio'];
+jQuery.extend(jQuery.expr[':'], {
+    textbox: function (elem) {
+       return jQuery.inArray(elem.type, types) === -1
+    }
+});
 
-		$('textarea').on('keydown', function(e) {
-			var code = (e.keyCode ? e.keyCode : e.which);
-			switch(code) 
-			{ 
-			case 13: // enter
-				sound.src = chrome.runtime.getURL("data/return.mp3");
-				
-			break; 
-			case 32:  // space
-				sound.src = chrome.runtime.getURL('data/space.mp3');
-				break; 
-			case 8:  // space
-			case 9: //tab
-				sound.src = chrome.runtime.getURL('data/backspace.mp3');
-				break; 
+$(function() {
+    listenTap();
+});
 
-			default: // all other key
-				var key = Math.floor((Math.random()*4)+1);
-				sound.src = chrome.runtime.getURL('data/key-0'+key+'.mp3');
-			break; 
-			}
-				if(code == 9) {//tab
-				this.value += '\t';
-				 return false;
-			}
-			else return true;
-			
-		});
+/**
+ * Register event on a list of input
+ */
+function listenTap()
+{
+    $body = $('body');
+
+    $body.on('focus', selectors, function(e) {
+        play('return-new');
+    });
+
+    $body.on('keydown', selectors, function(e){
+        var code = e.keyCode ? e.keyCode : e.which;
+        console.log(code);
+        var key = getKeyForCode(code);
+        play(key);
+    })
+}
+
+/**
+ * Play song for a given key
+ * @param string key
+ */
+function play(key) {
+    var audio = new Audio(chrome.runtime.getURL(sounds[key]));
+    audio.play();
+}
+
+/**
+ * Get Key for a code corresponding to a keydown
+ * @param int code
+ */
+function getKeyForCode(code) {
+    var key;
+    switch(code) {
+        case 13: // enter
+            key = "return";
+            break;
+        case 32:  // space
+            var random = Math.floor((Math.random()*2)+1);
+            key = "space" + random;
+            break;
+        case 8: // backspace
+        case 9: //tab
+            key = "backspace";
+            break;
+        default: // all other key
+            var random = Math.floor((Math.random()*4)+1);
+            key = "key" + random;
+            break;
+    }
+    return key;
+}
