@@ -24,7 +24,7 @@ $(function() {
  */
 function listenTap()
 {
-    var $input = $('input[type="text"], textarea');
+    var $input = $('input[type="text"], textarea, .ql-editor');
 
     $input.on('focus', function(e) {
         play('return-new');
