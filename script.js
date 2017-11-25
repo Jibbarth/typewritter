@@ -1,3 +1,5 @@
+var selectors = 'input:textbox, textarea, .ql-editor, .editable, .navigationFocus, [role="textbox"], [role="combobox"]';
+
 var sounds = {
     "space1" : "sound/space.mp3",
     "space2" : "sound/space-new.mp3",
@@ -15,6 +17,13 @@ var sounds = {
     "key-new5" : "sound/key-new-05.mp3"
 }
 
+var types = ['button', 'submit', 'reset', 'hidden', 'checkbox', 'radio'];
+jQuery.extend(jQuery.expr[':'], {
+    textbox: function (elem) {
+       return jQuery.inArray(elem.type, types) === -1
+    }
+});
+
 $(function() {
     listenTap();
 });
@@ -24,14 +33,15 @@ $(function() {
  */
 function listenTap()
 {
-    var $input = $('input[type="text"], textarea, .ql-editor');
+    $body = $('body');
 
-    $input.on('focus', function(e) {
+    $body.on('focus', selectors, function(e) {
         play('return-new');
     });
 
-    $input.on('keydown', function(e){
+    $body.on('keydown', selectors, function(e){
         var code = e.keyCode ? e.keyCode : e.which;
+        console.log(code);
         var key = getKeyForCode(code);
         play(key);
     })
@@ -65,8 +75,8 @@ function getKeyForCode(code) {
             key = "backspace";
             break;
         default: // all other key
-            var random = Math.floor((Math.random()*5)+1);
-            key = "key-new" + random;
+            var random = Math.floor((Math.random()*4)+1);
+            key = "key" + random;
             break;
     }
     return key;
