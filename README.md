@@ -1,3 +1,6 @@
+:warning: Not available anymore in chrome webstore.
+
+
 # :mega::keyboard: typewritter 
 
 [![Chrome Web Store](https://img.shields.io/chrome-web-store/v/claghgmjcobhejbicpgjdloejbchakho.svg?style=for-the-badge)](https://chrome.google.com/webstore/detail/typewritter/claghgmjcobhejbicpgjdloejbchakho) [![Chrome Web Store](https://img.shields.io/chrome-web-store/users/claghgmjcobhejbicpgjdloejbchakho.svg?style=for-the-badge)](https://chrome.google.com/webstore/detail/typewritter/claghgmjcobhejbicpgjdloejbchakho) [![Chrome Web Store](https://img.shields.io/chrome-web-store/price/claghgmjcobhejbicpgjdloejbchakho.svg?style=for-the-badge)](https://chrome.google.com/webstore/detail/typewritter/claghgmjcobhejbicpgjdloejbchakho)
